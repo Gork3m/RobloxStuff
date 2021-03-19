@@ -1,3 +1,7 @@
+-- Discord: discord.gg/moonsec
+-- Author: Federal#9999
+-- Note to devs: kys LOL have fun patching this
+
 DelayBetweenTPs = 0.9 -- seconds, 1 equals to 1 second. Smaller number ==> Faster autofarm. If you make it too fast, it might break
 Tasks = {
     ["Halley"] = {
