@@ -1,12 +1,5 @@
---Thing = "Halley" -- you can change this to thing that you want to farm, example: Airi
---[[
-
-  Written by Federal#9999
-    discord.gg/moonsec
-
-]]
 DelayBetweenTPs = 0.9 -- seconds, 1 equals to 1 second. Smaller number ==> Faster autofarm. If you make it too fast, it might break
-Tasks = { -- If you want to declare your very own thing, add it here and specify the CurrentTask below.
+Tasks = {
     ["Halley"] = {
         NPCPosition = Vector3.new(-1631.55981, 8.66267109, 3272.15649),
         ItemPosition = Vector3.new(-1365.78662, 8.66140175, 3070.06812),
@@ -26,8 +19,8 @@ Tasks = { -- If you want to declare your very own thing, add it here and specify
         ItemName = "Cat"
     }
 }
-
-CurrentTask = Tasks.Airi -- you can change this, it must be defined above!
+TASK_NAME = TASK_NAME or "Jake"   -- you can change this, it must be defined above!
+CurrentTask = Tasks[TASK_NAME]
 
 RS = game:GetService("ReplicatedStorage")
 LCP = (function()
@@ -53,7 +46,8 @@ while not getgenv().Stop do
 
     GoTo(CurrentTask.ItemPosition)
     wait(DelayBetweenTPs)
-    GetItem()
+
+    pcall(GetItem) -- This sometimes errors idk y
 
     wait(DelayBetweenTPs)
 
