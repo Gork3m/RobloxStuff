@@ -5,8 +5,30 @@
     discord.gg/moonsec
 
 ]]
+DelayBetweenTPs = 0.9 -- seconds, 1 equals to 1 second. Smaller number ==> Faster autofarm. If you make it too fast, it might break
+Tasks = { -- If you want to declare your very own thing, add it here and specify the CurrentTask below.
+    ["Halley"] = {
+        NPCPosition = Vector3.new(-1631.55981, 8.66267109, 3272.15649),
+        ItemPosition = Vector3.new(-1365.78662, 8.66140175, 3070.06812),
+        RemoteArg = "Halley",
+        ItemName = "Knife"
+    },
+    ["Jake"] = {
+        NPCPosition = Vector3.new(-1909.9364, 8.66159534, 4093.50952),
+        ItemPosition = Vector3.new(-1642.58862, 7.67278051, 3917.13306),
+        RemoteArg = "Jake",
+        ItemName = "Watch"
+    },
+    ["Airi"] = {
+        NPCPosition = Vector3.new(-1181.74451, 8.66140175, 2358.97607),
+        ItemPosition = Vector3.new(-498.269501, 8.67270184, 2507.17285),
+        RemoteArg = "Airi",
+        ItemName = "Cat"
+    }
+}
 
-if not Thing then Thing = "Halley" end
+CurrentTask = Tasks.Airi -- you can change this, it must be defined above!
+
 RS = game:GetService("ReplicatedStorage")
 LCP = (function()
     return game:GetService("Players").LocalPlayer
@@ -14,32 +36,31 @@ end)
 GoTo = (function(pos)
     LCP().Character:SetPrimaryPartCFrame(CFrame.new(pos.x, pos.y, pos.z))
 end)
-Positions = {
-    ["TaskNPC"] = Vector3.new(-1631.55981, 8.66267109, 3272.15649),
-    ["Item"] = Vector3.new(-1365.78662, 8.66140175, 3070.06812)
-}
+
 Remotes = {
     ["GetQuest"] = RS.newQuest,
     ["CompleteQuest"] = RS.Remotes.Interact
 }
 GetItem = (function()
-    LCP().Backpack.Knife.Parent = LCP().Character
+    LCP().Backpack[CurrentTask.ItemName].Parent = LCP().Character
 end)
 
 getgenv().Stop = false
 a = 0
 while not getgenv().Stop do
-    Remotes.GetQuest:FireServer(Thing)
-    wait(1) --
+    Remotes.GetQuest:FireServer(CurrentTask.RemoteArg)
+    wait(DelayBetweenTPs)
 
-    GoTo(Positions.Item)
-    wait(1) -- You can decrease the delay to make it run faster
+    GoTo(CurrentTask.ItemPosition)
+    wait(DelayBetweenTPs)
     GetItem()
-    wait(0.5) --
-    GoTo(Positions.TaskNPC)
-    wait(1) --
+
+    wait(DelayBetweenTPs)
+
+    GoTo(CurrentTask.NPCPosition)
+    wait(DelayBetweenTPs)
     Remotes.CompleteQuest:FireServer()
     a = a + 1
     print("Completed " .. a)
-    wait(1)
+    wait(DelayBetweenTPs)
 end
