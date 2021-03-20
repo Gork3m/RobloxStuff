@@ -21,6 +21,13 @@ Tasks = {
         ItemPosition = Vector3.new(-498.269501, 8.67270184, 2507.17285),
         RemoteArg = "Airi",
         ItemName = "Cat"
+    },
+    ["Amy"] = {
+        ItemPosition = Vector3.new(-3727.63, 15.95, 1401.3),
+        NPCPosition = Vector3.new(-3769.865, 5.8529, 1319.64),
+        RemoteArg = "Amy",
+        ItemName = "Banana"
+        
     }
 }
 TASK_NAME = TASK_NAME or "Jake"   -- you can change this, it must be defined above!
